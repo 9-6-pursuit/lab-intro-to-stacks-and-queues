@@ -79,9 +79,14 @@ describe("Queue", () => {
   test("Can remove from queue using dequeue method", () => {
     expect(wordQueue.dequeue()).toEqual("the");
   });
+  // test("Count size of queue", () => {
+  //   expect(numQueue.count()).toEqual(11);
+  // });
+
   test("Count size of queue", () => {
-    expect(numQueue.count()).toEqual(11);
+    expect(numQueue.size()).toEqual(11); // Use size() instead of count()
   });
+  
   test("Check if queue is empty", () => {
     const newQueue = new Queue();
     expect(newQueue.isEmpty()).toEqual(true);
