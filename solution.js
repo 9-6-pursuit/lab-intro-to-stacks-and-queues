@@ -38,9 +38,11 @@ class Queue {
       }
       const item = this.first;
       if (this.first === this.last){
-          this.size--;
-          return item.data;
+          urlToHttpOptions.last = null;
       }
+      this.first = this.first.next;
+      this.size--;
+      return item.data
   }
 
   enqueue(data){
@@ -50,7 +52,7 @@ class Queue {
         this.last = newItem;
     } else {
         this.last.next = newItem;
-        this.next = newItem;
+        this.last = newItem;
     }
     if (newItem.data > this.max){
       this.max = newItem.data;
