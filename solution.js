@@ -47,12 +47,14 @@ class Stack {
     return this.top.next;
   }
 
-  findMin(num) {
-    let currentNode = this.top
-    let min = Infinity
-    while(currentNode.data < min){
-      min = currentNode.data
-      currentNode.next
+  findMin() {
+    let min = Infinity;
+    let currentNode = this.top;
+    while(currentNode){
+      if(min > currentNode.data){
+        min = currentNode.data;
+      }
+      currentNode = currentNode.next;
     }
     return min;
   }
@@ -82,9 +84,12 @@ class Queue {
       this.last = newItem
     }else {
       this.last.next = newItem
-      this.first = newItem
+      this.last = newItem
     }
-    this.size += 1
+    if (newItem.data > this.max){ //finding max
+      this.max = newItem.data
+    }
+    this.size += 1                //counting length
   }
 
   dequeue () {
@@ -92,14 +97,14 @@ class Queue {
     if (this.first === null){
       throw new Error("The queue is empty")
     }
+    const item = this.first
     if (this.first === this.last){
-      this.last.next = null
+      this.last = null
     }
-    if(this.first){
-      this.first = this.first.next
-    }
+    this.first = this.first.next
+  
     this.size --;
-    return this.first;
+    return item.data;
   }
 
   count () {
@@ -121,15 +126,19 @@ class Queue {
     return this.last;  
   }
 
+  // findMax() {
+  //   let item = this.max
+  //   console.log(item);
+  //   while (this.first !== null){
+  //     if(item < this.first.data)
+  //     item = this.first.data
+  //     this.first = this.first.next
+  //   }
+  //   return item;
+  // }
+
   findMax() {
-    let item = this.max
-    console.log(item);
-    while (this.first !== null){
-      if(item < this.first.data)
-      item = this.first.data
-      this.first = this.first.next
-    }
-    return item;
+    return this.max;
   }
   
 }
