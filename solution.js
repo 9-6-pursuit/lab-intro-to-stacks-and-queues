@@ -17,13 +17,24 @@ class Queue {
   }
 
   count () {
-
+    return this.size;
   }
+
+
+  // count () {
+  //   let count = 0;
+  //   let node = this.top;
+  //   while (node) {
+  //       count+=1;
+  //       node = node.next;
+  //   }
+  //   return count;
+  // }
 
 
   dequeue(){
       if (this.first == null){
-          throw new Error("This cueue is empty");
+          throw new Error("This queue is empty");
       }
       const item = this.first;
       if (this.first === this.last){
@@ -41,27 +52,31 @@ class Queue {
         this.last.next = newItem;
         this.next = newItem;
     }
+    if (newItem.data > this.max){
+      this.max = newItem.data;
+    }
     return ++this.size;
 }
 
 
-
-
   findMax(){
-
+    return this.max;
   }
+
   getLast(){
-
+    return this.last;
   }
+
   isEmpty(){
     return this.first === null; 
   }
+
   peek() {
     if (this.first==null) {
         throw new Error("The queue is empty")
     };
     return this.first;
-}
+  }
 }
 
 class Stack {
@@ -101,9 +116,18 @@ class Stack {
     return this.top === null;
   }
 
-  findMin (data) {
-
+  findMin () {
+    let min = Infinity;
+    let node = this.top;
+    while (node){
+      if (node.data<min){
+        min = node.data;
+      }
+      node = node.next;
+    } 
+    return min;
   }
+
 
   peek(){
     return this.top;
