@@ -106,7 +106,7 @@ class Queue {
     if (this.first === this.last) {
       this.last = null;
     }
-    this.first = this.first.next;
+    this.first = this.first.next; 2, 3 
     this.size--;
     return item.data;
   }
@@ -142,8 +142,9 @@ class Queue {
 
 
   peek() {
-    return this.first !== null ? this.first.data : null;
+    return this.first !== null ? this.first : null;
   }
+  
 
 
 }
