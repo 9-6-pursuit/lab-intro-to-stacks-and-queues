@@ -74,6 +74,62 @@ class Stack {
     }
   }
 }
+// 2: CREATING TICKET-LINE DATA STRUCTURE
+class Queue {
+  constructor(maxValue) {
+    this.first = null;
+    this.last = null;
+    this.size = 0;
+    this.maxValue = maxValue;
+  }
+
+  count() {
+    return this.size;
+  }
+  //REMOVE FIRST TICKET FROM TICKET-LINE
+  dequeue() {
+    if (!this.first) return "Queue is empty"; // EDGE-CASE
+    if (this.first === this.last) this.last = null;
+    const current = this.first;
+    this.first = this.first.next;
+    this.size--;
+    return current.data;
+  }
+  //ADD TO END OF TICKET-LINE
+  enqueue(data) {
+    if (this.size === this.maxValue) {
+      throw new Error("Queue is full.");
+    }
+    const newNode = new Node(data);
+    if (this.first) this.last.next = newNode;
+    else this.first = newNode;
+    this.last = newNode;
+    this.size++;
+  }
+//FINDS MAX VALUE 
+  findMax() {
+    if (this.isEmpty()) return null;
+    let max = this.first.data;
+    let current = this.first;
+    while (current) {
+      if (current.data > max) max = current.data;
+      current = current.next;
+    }
+    return max;
+  }
+//RETURNS LAST TICKET IN TICKET-LINE
+  getLast() {
+    return this.last;
+  }
+//IS TICKET-LINE EMPTY
+  isEmpty() {
+    return this.size === 0;
+  }
+  //THIS METHOD RETURNS THE FIRST TICKET W/OUT REMOVING FROM TICKET-LINE
+  peek() {
+    return this.first;
+  }
+}
 
 module.exports = {
   Node,
