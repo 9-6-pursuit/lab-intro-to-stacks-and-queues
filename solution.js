@@ -9,75 +9,85 @@ class Node {
 }
 
 class Stack {
-  constructor() {
-    this.top = null;
-    this.minStack = new Stack(); // For finding the minimum value
+  constructor(top = null) {
+    this.top = top;
   }
 
-  push(data) {
-    const newNode = new Node(data);
-    newNode.next = this.top;
-    this.top = newNode;
+  push(data){
+    const newItem = new Node(data);
+    newItem.next = this.top;
+    this.top = newItem;
+  }
 
-    // Update the minimum stack
-    if (!this.minStack.top || data <= this.minStack.top.data) {
-      this.minStack.push(data);
+  pop(){
+    if (this.top == null) {
+      throw new Error("The stack is empty");
+    }
+    let item = this.top;
+    if (item) {
+      let newItem = item.next;
+      this.top = newItem;
+      return item;
     }
   }
 
-  size() {
+  size(){
     let count = 0;
-    let current = this.top;
-    while (current) {
+    let node = this.top;
+
+    while (node) {
       count++;
-      current = current.next;
+      node = node.next;
     }
+
     return count;
   }
 
-  pop() {
-    if (!this.top) return null;
-
-    // Update the minimum stack
-    if (this.top.data === this.minStack.top.data) {
-      this.minStack.pop();
-    }
-
-    const removedData = this.top.data;
-    this.top = this.top.next;
-    return removedData;
-  }
-
-  isEmpty() {
+  isEmpty(){
     return this.top === null;
   }
 
-  findMin() {
-    if (!this.minStack.top) return null;
-    return this.minStack.top.data;
+  peek(){
+    if (this.top == null) {
+      throw new Error("The stack is empty");
+    }
+    return this.top;
   }
 
-  peek() {
-    if (!this.top) return null;
-    return this.top.data;
-  }
+  findMin(){
+    let min = 0;
+    let node = this.top;
 
-  
- // Bonus: Sort the stack in ascending order using only stacks (no arrays)
-sort() {
-  const tempStack = new Stack();
-
-  while (!this.isEmpty()) {
-    const temp = this.pop();
-
-    while (!tempStack.isEmpty() && tempStack.peek() < temp) { 
-      this.push(tempStack.pop());
+    while (node) {
+      if(min > node.data){
+        min = node.data
+      }
+      node = node.next;
     }
 
-    tempStack.push(temp);
+    return min;
   }
 
-  this.top = tempStack.top;
+  sort() {
+    // stack where the sorted parts are inserted
+    const sortedStack = new Stack();
+
+    while (!this.isEmpty()) {
+      // popped the stack
+      const temp = this.pop();
+      console.log(temp)
+
+      // sort the popped stack
+      while (!sortedStack.isEmpty() && sortedStack.peek().data > temp.data) {
+        this.push(sortedStack.pop().data);
+      }
+      //pushed unsorted stack
+      sortedStack.push(temp.data);
+    }
+
+    while (!sortedStack.isEmpty()) {
+      this.push(sortedStack.pop().data);
+    }
   }
 }
 
@@ -85,63 +95,72 @@ class Queue {
   constructor() {
     this.first = null;
     this.last = null;
+    this.size = 0;
+    this.max = null;
   }
 
-  size() {
-    let count = 0;
-    let current = this.first;
-    while (current) {
-      count++;
-      current = current.next;
-    }
-    return count;
-  }
-
-  enqueue(data) {
-    const newNode = new Node(data);
+  enqueue(data){
+    let newItem = new Node(data);
     if (!this.first) {
-      this.first = newNode;
-      this.last = newNode;
+      this.first = newItem;
+      this.last = newItem;
     } else {
-      this.last.next = newNode;
-      this.last = newNode;
+      this.last.next = newItem;
+      this.last = newItem;
     }
+    return ++this.size;
   }
 
-  dequeue() {
-    if (!this.first) return null;
-    const removedData = this.first.data;
+  dequeue(){
+    if (this.first == null) {
+      throw new Error("The queue is empty");
+    }
+    const item = this.first;
+    if (this.first === this.last) {
+      this.last = null;
+    }
     this.first = this.first.next;
-    return removedData;
+    this.size--;
+    return item.data;
   }
 
-  findMax() {
-    let max = null;
-    let current = this.first;
-    while (current) {
-      if (max === null || current.data > max) {
-        max = current.data;
-      }
-      current = current.next;
-    }
-    return max;
+  count(){
+    return this.size
   }
 
-  getLast() {
-    if (!this.last) return null;
-    return this.last.data;
-  }
-
-  isEmpty() {
+  isEmpty(){
     return this.first === null;
   }
 
-  peek() {
-    if (!this.first) return null;
-    return this.first.data;
+  peek(){
+    if (this.first == null) {
+      throw new Error("The queue is empty");
+    }
+    return this.first;
   }
-}
 
+  getLast(){
+    if (this.last === null) {
+      throw new Error("The queue is empty");
+    }
+    return this.last;
+  }
+
+  findMax(){
+    let max = 0;
+    let node = this.first;
+
+    while (node) {
+      if(max < node.data){
+        max = node.data
+      }
+      node = node.next;
+    }
+
+    return max;
+  }
+
+}
 module.exports = {
   Node,
   Queue,
