@@ -20,5 +20,8 @@
   "homepage": "https://github.com/joinpursuit/m6-array-method-drills#readme",
   "devDependencies": {
     "jest": "^27.0.6"
+  },
+  "dependencies": {
+    "code": "^5.2.4"
   }
 }
